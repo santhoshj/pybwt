@@ -136,9 +136,9 @@ class BWTIndex (object) :
 
         if (start >= end):
             return None
-        ret = []
+        ret = set() 
         for i in range(start, end):
-            ret.append(self.suffixArray[i])
+            ret.add(self.suffixArray[i])
         return ret
 
 def getBWTIndex(string):
