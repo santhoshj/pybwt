@@ -14,12 +14,21 @@ class BWTCreator(object):
         original = self.string + self.TERMINATION_CHAR
         permutations = []
         for i in range(0, len(original)):
-            permutations.append(original[i:] + original[0:i])
-        permutations.sort()
+            permutations.append((original[i:] + original[0:i], i))
+        def cmpFn (x, y):
+            if (x[0] == y[0]):
+                return 0
+            elif (x[0] < y[0]):
+                return -1
+            else:
+                return 1
+        permutations.sort(cmp=cmpFn)
         bwt = ''
+        suffixArray = []
         for permutation in permutations:
-            bwt += permutation[-1]
-        return bwt
+            bwt += permutation[0][-1]
+            suffixArray.append(permutation[1])
+        return (bwt, suffixArray)
 
 """
 Get rank of a character given an alphabet(ordered) and a frequency
@@ -27,8 +36,9 @@ map of all characters in the alphabet
 """
 class BWTIndexCreator(object):
     
-    def __init__(self, bwt):
+    def __init__(self, bwt, suffixArray):
         self.bwt = bwt
+        self.suffixArray = suffixArray
 
     def getIndex(self):
         freq = {}
@@ -41,7 +51,7 @@ class BWTIndexCreator(object):
         alphabet.sort()
         cumulativeMap = CumulativeMap(alphabet, freq)
         bwtRanks = self.getBWTRanks()
-        return BWTIndex(self.bwt, cumulativeMap, bwtRanks)
+        return BWTIndex(self.bwt, cumulativeMap, bwtRanks, self.suffixArray)
 
     def getBWTRanks(self):
         cumulative = {}
@@ -99,10 +109,11 @@ BWT index
 """
 class BWTIndex (object) :
     
-    def __init__(self, bwt, cumulativeMap, bwtRanks):
+    def __init__(self, bwt, cumulativeMap, bwtRanks, suffixArray):
         self.bwt = bwt
         self.cumulativeMap = cumulativeMap
         self.bwtRanks = bwtRanks
+        self.suffixArray = suffixArray
 
     # Search for a given string
     # Returns the range [x,y) of matches. Returns None if no match found
@@ -125,11 +136,14 @@ class BWTIndex (object) :
 
         if (start >= end):
             return None
-        return (start, end)
+        ret = []
+        for i in range(start, end):
+            ret.append(self.suffixArray[i])
+        return ret
 
 def getBWTIndex(string):
     bwtCreator = BWTCreator(string)
-    bwt = bwtCreator.bwt()
-    indexCreator = BWTIndexCreator(bwt)
+    (bwt, suffixArray) = bwtCreator.bwt()
+    indexCreator = BWTIndexCreator(bwt, suffixArray)
     index = indexCreator.getIndex()
     return index
