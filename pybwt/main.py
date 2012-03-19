@@ -4,6 +4,7 @@ import pickle
 
 def main(string, query):
     index = getBWTIndex(string)
+    print index.bwt
     print index.search(query)
     #f = open("/tmp/index1", 'w')
     #pickle.dump(index, f)

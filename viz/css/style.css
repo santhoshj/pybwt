@@ -1,0 +1,31 @@
+html {
+  background: #eeeeee;
+}
+body {
+  font-family: "Lucida", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.4em;
+  background: #eeeeee;
+  color: #333333;
+}
+.content {
+  margin: 0 auto 40px;
+  background: white;
+  padding: 30px;
+  padding-top : 40px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
+  -o-box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 5px 6px 0;
+}
+.footer {
+  text-align : center
+}
+.header {
+  text-align : center
+}
+
+#bwt {
+  height : 500px;
+  width : 500px;
+  background-color : #EEE;
+}
