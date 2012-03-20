@@ -24,6 +24,11 @@ body {
   text-align : center
 }
 
+#bwtparent {
+  padding-top : 10px;
+  padding-bottom : 20px;
+}
+
 #bwt {
   height : 500px;
   width : 500px;
