@@ -31,6 +31,10 @@ body {
 
 #bwt {
   height : 500px;
-  width : 500px;
+  width : 600px;
   background-color : #EEE;
+}
+
+#controls {
+  text-align : center;
 }
