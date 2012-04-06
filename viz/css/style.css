@@ -38,3 +38,19 @@ body {
 #controls {
   text-align : center;
 }
+
+#status {
+  width : "100%";
+  height : 50px;
+  font-size : 15px;
+  text-align : center;
+  margin : 10px;
+}
+
+#inputs label {
+  width:50px;
+  height:20px;
+  float:left;
+}
+
+

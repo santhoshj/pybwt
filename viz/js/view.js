@@ -172,18 +172,30 @@ Text.prototype.drawText = function(text) {
     }
 };
 
-Text.prototype.setActive = function(items) {
+Text.prototype.setActive = function(item) {
+    this.clearActive();
+    var x = this.x  + this.cellWidth * item;
+    var rect = this.paper.rect(x, this.y, this.cellWidth, this.cellHeight);
+    rect.attr({
+        fill : 'red',
+        opacity : 0.2
+    });
+    this.active.push(rect);
+};
+
+Text.prototype.setActiveAll = function(items, color) {
     this.clearActive();
     for (var i=0; i < items.length; ++i) {
         var x = this.x  + this.cellWidth * items[i];
         var rect = this.paper.rect(x, this.y, this.cellWidth, this.cellHeight);
         rect.attr({
-            fill : 'red',
+            fill : color,
             opacity : 0.2
         });
         this.active.push(rect);
     }
 };
+
 
 Text.prototype.clearActive = function() {
     for (var i=0; i < this.active.length; ++i)

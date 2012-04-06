@@ -1,0 +1,32 @@
+This post is the first of a series where we describe some of the cool algorithms used in our product Avadis NGS.
+<talk about challenges in bioinformatis>
+One of the goals of this series is to minimize the usage of biology jargon, and present the problem and solution in <CS friendly manner>.
+
+This post describes an elegant and fast algorithm to perform exact string match. Why another string matching algorithm?
+To answer the question, we need to understand what the problem we are trying to solve is.
+
+In short, the problem is to match billions of short strings (about 50-100 characters long) to a text which is 2 billion characters long. The 2 billion character string (referred to as the reference hereafter) is known ahead and is fixed (at least for a species). The shorter strings (called reads hereafter) are generated as a result of an experiment. The problem arises due to the way the sequencing technology works, which in its current form, breaks the DNA into small fragments and 'reads' them. The information about where the fragments came from is lost and hence the need to 'map' them back to the reference sequence.
+
+
+We need an algorithm that allows repeatedly searching on a text as fast as possible. We are allowed to perform some preprocessing on the text once if that will help us achieve this goal.
+Enter BWT.
+
+Burrows Wheeler transform is a reversible transformation that has been widely used for its compressibility properties. However the stroke of genius came in the year 9999 where X and Y found an elegant application of BWT to perform string matching. This technique is the topic of this post.
+
+Before we get to the searching application, a little background how BWT is constructed and some properties of BWT.
+
+Take any string T. Take all the cyclic permutations of the string and sort them lexicographically. Arrange all the sorted permutations one below the other. The last column forms the BWT. This seemingly <lucky thing> has some nice properties,
+1. Reversible 
+2. Compressibility
+3. Rank maintained <crucial to search>
+
+
+<Suffix d BWT>
+
+aaae
+<Other similar solutions and why BWT is preferred>
+<Arrays easier to handle>
+
+<describe ui>
+
+ion and next post>
