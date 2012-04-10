@@ -55,7 +55,7 @@ function stephandler() {
     if (queryPosition === query.length -1) {
         startSearch(false);
     } else {
-        advance(false);
+        delayedAdvance(false);
     }
 }
 
@@ -82,9 +82,12 @@ function startSearch(play) {
 /**
  * Perform a delayed advance to the next alphabet
  */
-function delayedAdvance() {
+function delayedAdvance(play) {
+    if (play === undefined || play === null)
+        play = true;
+    bwtView.grid.showRanks(range.start, range.end, query[queryPosition]);
     setTimeout(function() {
-        advance(true);
+        advance(play);
     }, 1000);
 }
 

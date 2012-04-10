@@ -128,6 +128,49 @@ SuffixGrid.prototype.setRange = function(start, end, callback) {
     }, 1000, callback);
 };
 
+SuffixGrid.prototype.showRanks1 = function(start, end, alph) {
+    var startRankText = this.paper.text(10, 10, "Rank of " + alph + " : " + this.ranks[start][alph]);
+    var startRank = this.paper.popup(this.x + this.width, this.y + this.cellHeight*start, startRankText, "right"); 
+
+
+    var endRankText = this.paper.text(10, 10, "Rank of " + alph + " : " + this.ranks[end][alph]);
+    var endRank = this.paper.popup(this.x + this.width, this.y + this.cellHeight*end, endRankText, "right");
+    /*
+    setTimeout(function(){
+        startRank.remove();
+        startRankText.remove();
+        endRank.remove();
+        endRankText.remove();
+    }, 500);*/
+};
+
+
+SuffixGrid.prototype.showRanks = function(start, end, alph) {
+    if (this.startRank === undefined || this.startRank === null) {
+        this.startRankText = this.paper.text(10, 10, "Rank of  xx : yy  ");
+        this.startRank = this.paper.popup(this.x + this.width, this.y + this.cellWidth/2, this.startRankText, "right");
+        this.startRank.prevY = this.y;
+    }
+
+    if (this.endRank === undefined || this.endRank === null) {
+        this.endRankText = this.paper.text(10, 10, "Rank of xx : yy  ");
+        this.endRank = this.paper.popup(this.x + this.width, this.y + this.cellWidth/2, this.endRankText, "right"); 
+        this.endRank.prevY = this.y;
+    } 
+
+    this.startRankText.attr("text", "Rank of "+ alph + " : " + this.ranks[start][alph]);
+    this.endRankText.attr("text", "Rank of "+ alph + " : " + this.ranks[end][alph]);
+    
+    this.startRank.translate(0, this.y+this.cellHeight*start - this.startRank.prevY, 1000);
+    this.endRank.translate(0, this.y+this.cellHeight*end - this.endRank.prevY);
+    
+    this.startRankText.translate(0, this.y+this.cellHeight*start - this.startRank.prevY);
+    this.endRankText.translate(0, this.y+this.cellHeight*end - this.endRank.prevY);
+    
+    this.startRank.prevY = this.y+this.cellHeight*start;
+    this.endRank.prevY = this.y+this.cellHeight*end;
+};
+
 /**
  * View for showing the text that is searched. Indicates the search results after search is complete.
  */
@@ -212,7 +255,7 @@ function BWTView(divID) {
     this.height = div.height();
     this.paper = Raphael(divID, div.width(), div.height());
     this.padding = 10;
-    this.rightPadding = 20;
+    this.rightPadding = 100;
 }
 
 BWTView.prototype.clear = function() {
