@@ -4,7 +4,7 @@
  */
 $(document).ready(function() {
     bwtView = new BWTView("bwt");
-    loadText("abracadabra$");
+    loadText("banana$");
     loadQuery("cada");
     $('#play').click(playhandler);
     $('#step').click(stephandler);
@@ -85,7 +85,8 @@ function startSearch(play) {
 function delayedAdvance(play) {
     if (play === undefined || play === null)
         play = true;
-    bwtView.grid.showRanks(range.start, range.end, query[queryPosition]);
+    if (queryPosition >= 0)
+        bwtView.grid.showRanks(range.start, range.end, query[queryPosition]);
     setTimeout(function() {
         advance(play);
     }, 1000);

@@ -19,6 +19,10 @@ SuffixGrid.prototype.loadText = function(suffixes, suffixArray, ranks) {
     this.drawSuffixArray(suffixArray);
     this.drawSuffixGrid(suffixes);
     this.highLightColumns(suffixes.length);
+    this.startRank = null;
+    this.startRankText = null;
+    this.endRank = null;
+    this.endRankText = null;
 };
 
 /**
@@ -41,7 +45,7 @@ SuffixGrid.prototype.drawSuffixArray = function(suffixArray) {
         var y = this.y + i*this.cellHeight;
         var rect = this.paper.rect(x, y, this.cellWidth, this.cellHeight);
         rect.attr({
-            "fill" : 'yellow',
+            "fill" : 'lightgrey',
             "opacity" : 0.3
         });
         var text = this.paper.text(x+this.cellWidth/2, y+this.cellHeight/2, suffixArray[i]);
@@ -64,7 +68,7 @@ SuffixGrid.prototype.drawSuffixGrid = function(suffixes) {
             var y = startY + i*this.cellHeight;
             var rect = this.paper.rect(x, y, this.cellWidth, this.cellHeight);
             rect.attr({
-                "fill" : 'yellow',
+                "fill" : 'lightgrey',
                 "opacity" : 0.3
             });
             var text = this.paper.text(x+this.cellWidth/2, y+this.cellHeight/2, suffixes[i][j]);
@@ -128,23 +132,9 @@ SuffixGrid.prototype.setRange = function(start, end, callback) {
     }, 1000, callback);
 };
 
-SuffixGrid.prototype.showRanks1 = function(start, end, alph) {
-    var startRankText = this.paper.text(10, 10, "Rank of " + alph + " : " + this.ranks[start][alph]);
-    var startRank = this.paper.popup(this.x + this.width, this.y + this.cellHeight*start, startRankText, "right"); 
-
-
-    var endRankText = this.paper.text(10, 10, "Rank of " + alph + " : " + this.ranks[end][alph]);
-    var endRank = this.paper.popup(this.x + this.width, this.y + this.cellHeight*end, endRankText, "right");
-    /*
-    setTimeout(function(){
-        startRank.remove();
-        startRankText.remove();
-        endRank.remove();
-        endRankText.remove();
-    }, 500);*/
-};
-
-
+/**
+ * Show rank as a tooltip
+ */
 SuffixGrid.prototype.showRanks = function(start, end, alph) {
     if (this.startRank === undefined || this.startRank === null) {
         this.startRankText = this.paper.text(10, 10, "Rank of  xx : yy  ");
@@ -156,10 +146,18 @@ SuffixGrid.prototype.showRanks = function(start, end, alph) {
         this.endRankText = this.paper.text(10, 10, "Rank of xx : yy  ");
         this.endRank = this.paper.popup(this.x + this.width, this.y + this.cellWidth/2, this.endRankText, "right"); 
         this.endRank.prevY = this.y;
-    } 
-
-    this.startRankText.attr("text", "Rank of "+ alph + " : " + this.ranks[start][alph]);
-    this.endRankText.attr("text", "Rank of "+ alph + " : " + this.ranks[end][alph]);
+    }
+    console.log("Start bbox x: " + this.startRankText.getBBox().x + " y: " + this.startRankText.getBBox().y);
+    var startRank = this.ranks[start][alph];
+    if (startRank !== undefined)
+        this.startRankText.attr("text", "Rank of "+ alph + " : " + startRank);
+    else
+        this.startRankText.attr("text", alph + " not present");
+    var endRank = this.ranks[end][alph];
+    if (endRank !== undefined)
+        this.endRankText.attr("text", "Rank of "+ alph + " : " + endRank);
+    else
+        this.endRankText.attr("text", alph + " not present");
     
     this.startRank.translate(0, this.y+this.cellHeight*start - this.startRank.prevY, 1000);
     this.endRank.translate(0, this.y+this.cellHeight*end - this.endRank.prevY);

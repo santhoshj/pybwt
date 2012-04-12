@@ -7,6 +7,11 @@ body {
   background: #eeeeee;
   color: #333333;
 }
+
+p {
+  margin-top: 0em;
+  margin-bottom: 2em;
+}
 .content {
   margin: 0 auto 40px;
   background: white;
