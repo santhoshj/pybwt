@@ -89,7 +89,7 @@ SuffixGrid.prototype.highLightColumns = function(textLength) {
     // Suffix array
     var suffixArray = this.paper.rect(this.x, this.y, this.cellWidth, this.cellHeight * textLength);
     suffixArray.attr({
-        fill : "yellow",
+        fill : "orange",
         opacity : 0.3
     });
 

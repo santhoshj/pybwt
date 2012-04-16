@@ -4,8 +4,8 @@
  */
 $(document).ready(function() {
     bwtView = new BWTView("bwt");
-    loadText("banana$");
-    loadQuery("cada");
+    loadText("abracadabra$");
+    loadQuery("ada");
     $('#play').click(playhandler);
     $('#step').click(stephandler);
     $('#submit').click(submithandler);
@@ -86,7 +86,7 @@ function delayedAdvance(play) {
     if (play === undefined || play === null)
         play = true;
     if (queryPosition >= 0)
-        bwtView.grid.showRanks(range.start, range.end, query[queryPosition]);
+        bwtView.grid.showRanks(range.start, range.end-1, query[queryPosition]);
     setTimeout(function() {
         advance(play);
     }, 1000);
@@ -116,6 +116,9 @@ function advance(play) {
     }
 }
 
+/**
+ * Handler when search fails
+ */
 function searchFailed() {
     $('#status').html("Query not found");
     $('#status').css('color', 'red');
@@ -123,6 +126,9 @@ function searchFailed() {
     enableButtons();
 }
 
+/**
+ * Handler when search succeeds
+ */
 function searchSuccess() {
     var results = range.end - range.start;
     if (results === 1)
@@ -139,11 +145,18 @@ function searchSuccess() {
     enableButtons();
 }
 
+/**
+ * Enable the play and step buttons
+ */
 function enableButtons() {
     $('#play').attr('disabled', false);
     $('#step').attr('disabled', false);
 }
 
+/**
+ * Handler when submit button is clicked. Loads the values from the text
+ * and query inputs to the viz
+ */
 function submithandler() {
     var text = $('#inptext').val();
     var query = $('#query').val();
